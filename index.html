@@ -37,7 +37,6 @@
         <div class="p-8 text-center bg-orange-50" id="headerBg">
             <div class="relative inline-block mb-4">
                 <div class="logo-container shadow-lg">
-                    <!-- 已將副檔名更改為 .png -->
                     <img src="./貼紙修改顏色-20251223.png" alt="13盧比民族風圖標" class="logo-image" 
                          onerror="this.onerror=null; this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22140%22 height%3D%22140%22 viewBox%3D%220 0 140 140%22%3E%3Ccircle cx%3D%2270%22 cy%3D%2270%22 r%3D%2270%22 fill%3D%22%23c2410c%22%2F%3E%3Ctext x%3D%2250%25%22 y%3D%2250%25%22 text-anchor%3D%22middle%22 dy%3D%22.3em%22 fill%3D%22white%22 font-size%3D%2216%22%3E13 Rupees%3C%2Ftext%3E%3C%2Fsvg%3E';">
                 </div>
@@ -68,9 +67,20 @@
                 <input type="tel" id="phoneNumber" name="phoneNumber" required pattern="[0-9]{10,}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none" placeholder="例如：0912345678">
             </div>
 
+            <!-- 修改後的生日選單：只有月、日 -->
             <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-1">生日</label>
-                <input type="date" id="birthday" name="birthday" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none">
+                <label class="block text-sm font-semibold text-gray-700 mb-1">生日 (月/日)</label>
+                <div class="grid grid-cols-2 gap-4">
+                    <select id="birthMonth" name="birthMonth" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none">
+                        <option value="" disabled selected>月份</option>
+                        <!-- 由 JavaScript 生成選項 -->
+                    </select>
+                    <select id="birthDay" name="birthDay" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none">
+                        <option value="" disabled selected>日期</option>
+                        <!-- 由 JavaScript 生成選項 -->
+                    </select>
+                </div>
+                <p class="text-xs text-gray-400 mt-1">* 僅用於提供生日優惠</p>
             </div>
 
             <hr class="my-6 border-gray-100">
@@ -109,6 +119,24 @@
             emailjs.init("bNKauQatfjk3zowwB"); 
         })();
 
+        // 動態生成月份與日期選項
+        const monthSelect = document.getElementById('birthMonth');
+        const daySelect = document.getElementById('birthDay');
+
+        for (let i = 1; i <= 12; i++) {
+            const opt = document.createElement('option');
+            opt.value = i;
+            opt.textContent = i + ' 月';
+            monthSelect.appendChild(opt);
+        }
+
+        for (let i = 1; i <= 31; i++) {
+            const opt = document.createElement('option');
+            opt.value = i;
+            opt.textContent = i + ' 日';
+            daySelect.appendChild(opt);
+        }
+
         document.getElementById('membershipForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -116,17 +144,17 @@
             btn.disabled = true;
             btn.innerText = '處理中，請稍候...';
 
-            // 準備發送的資料，將姓名與稱謂合併發送
             const fullName = document.getElementById('wechatName').value + ' ' + document.getElementById('userTitle').value;
+            // 組合生日字串
+            const birthDate = document.getElementById('birthMonth').value + '月' + document.getElementById('birthDay').value + '日';
 
             const templateParams = {
                 from_name: fullName,
                 phone: document.getElementById('phoneNumber').value,
-                birthday: document.getElementById('birthday').value,
+                birthday: birthDate,
                 email: 'u831024@gmail.com'
             };
 
-            // 使用您提供的 Service ID 與 Template ID
             emailjs.send('service_bss9zeo', 'template_8k381oo', templateParams)
                 .then(function(response) {
                     console.log('SUCCESS!', response.status, response.text);
