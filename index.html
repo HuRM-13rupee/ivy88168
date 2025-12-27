@@ -35,7 +35,9 @@
             object-fit: contain; 
             display: block;
             transform: scale(1.3); /* 放大呈現 */
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); /* 增加陰影提升層次感 */
+            /* 關鍵：使用 multiply 混合模式將圖片中的白色背景過濾掉，使其與下方背景同色 */
+            mix-blend-mode: multiply;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); 
         }
     </style>
 </head>
@@ -93,7 +95,7 @@
 
             <hr class="my-6 border-gray-300">
 
-            <!-- 權益說明區塊：背景稍深一點以作區隔 -->
+            <!-- 權益說明區塊 -->
             <div class="bg-orange-100/50 p-5 rounded-xl border border-orange-200">
                 <h3 class="font-bold text-orange-800 mb-3 flex items-center">
                     <span class="mr-2">📜</span> 【會員權益與規定】
@@ -132,12 +134,10 @@
     </div>
 
     <script>
-        // 初始化 EmailJS
         (function() {
             emailjs.init("bNKauQatfjk3zowwB"); 
         })();
 
-        // 動態生成月份與日期選項
         const monthSelect = document.getElementById('birthMonth');
         const daySelect = document.getElementById('birthDay');
 
@@ -174,12 +174,10 @@
 
             emailjs.send('service_bss9zeo', 'template_8k381oo', templateParams)
                 .then(function(response) {
-                    console.log('SUCCESS!', response.status, response.text);
                     document.getElementById('membershipForm').classList.add('hidden');
                     document.getElementById('headerBg').classList.add('hidden');
                     document.getElementById('successMessage').classList.remove('hidden');
                 }, function(error) {
-                    console.error('FAILED...', error);
                     alert('發送失敗，原因：' + (error.text || JSON.stringify(error)));
                     btn.disabled = false;
                     btn.innerText = '立即加入會員';
