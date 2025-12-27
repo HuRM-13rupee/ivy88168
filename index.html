@@ -97,14 +97,23 @@
             <hr class="my-6 border-gray-100">
 
             <div class="bg-orange-50 p-5 rounded-xl border border-orange-100">
-                <h3 class="font-bold text-orange-800 mb-3">【會員權益與規定】</h3>
-                <ul class="text-sm text-gray-600 space-y-2">
+                <h3 class="font-bold text-orange-800 mb-3 flex items-center">
+                    <span class="mr-2">📜</span> 【會員權益與規定】
+                </h3>
+                <ul class="text-sm text-gray-600 space-y-2 leading-relaxed">
                     <li>• 填寫資料即可成為會員。</li>
-                    <li>• 單次消費滿 <span class="accent-color font-bold">2000 元</span> 即可成為 VIP 享優惠。</li>
-                    <li>• 消費滿 100 元積 1 點，滿 30 點進階成為 VIP。</li>
-                    <li>• VIP 持卡平日享 <span class="font-bold">9 折</span> (特價品除外)。</li>
-                    <li>• 貴賓生日當月持卡消費享 <span class="accent-color font-bold">85 折</span>。</li>
+                    <li>• 單次消費滿 <span class="font-bold accent-color text-base">2000 元</span> 即可成為 VIP 及享貴賓優惠。</li>
+                    <li>• 會員消費滿 100 元即可累積 1 點，累積 30 點即可進階成為 VIP 及享貴賓優惠。</li>
+                    <li>• 持 VIP 卡消費享有 <span class="font-bold text-gray-800">平日 9 折</span> (特價品除外)。</li>
+                    <li>• 貴賓卡生日當月持卡消費享有 <span class="font-bold accent-color">85 折</span>。</li>
                 </ul>
+            </div>
+
+            <div class="flex items-start mt-4">
+                <input id="terms" type="checkbox" required class="mt-1 w-4 h-4 text-orange-600 border-gray-300 rounded focus:ring-orange-500">
+                <label for="terms" class="ml-2 text-xs text-gray-500">
+                    我已閱讀並同意上述會員權益與規定。
+                </label>
             </div>
 
             <button type="submit" id="submitBtn" class="w-full bg-accent hover:bg-orange-800 text-white font-bold py-4 rounded-xl shadow-lg transition-all active:scale-[0.98]">
