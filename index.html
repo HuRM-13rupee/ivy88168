@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13盧比民族風會員</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 EmailJS 用於發送郵件 -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        body {
+            background-color: #f3f4f6;
+            font-family: "Microsoft JhengHei", -apple-system, sans-serif;
+        }
+        .ethnic-border {
+            border-top: 8px solid #c2410c;
+        }
+        .accent-color {
+            color: #c2410c;
+        }
+        .bg-accent {
+            background-color: #c2410c;
+        }
+        /* 圖片容器：去除白邊，並確保圖片填滿圓圈 */
+        .logo-container {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #c2410c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+        }
+        .logo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body class="min-h-screen py-10 px-4">
+
+    <div class="max-w-xl mx-auto bg-white rounded-2xl overflow-hidden shadow-2xl ethnic-border">
+        <!-- 頂部視覺區 -->
+        <div class="p-8 text-center bg-orange-50">
+            <div class="relative inline-block mb-4">
+                <!-- 替換為上傳的圓型圖示，並去除白邊 -->
+                <div class="logo-container shadow-lg">
+                    <!-- 此處應放入您的圖片檔案路徑，目前以占位圖模擬無邊框效果 -->
+                    <img src="https://drive.google.com/file/d/17tekyfzWDUdXWIzR0jBwY-42msywR8VV/view?usp=sharing" alt="13盧比民族風圖標" class="logo-image" 
+                         onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22120%22 height%3D%22120%22 viewBox%3D%220 0 120 120%22%3E%3Ccircle cx%3D%2260%22 cy%3D%2260%22 r%3D%2260%22 fill%3D%22%23c2410c%22%2F%3E%3Ctext x%3D%2250%25%22 y%3D%2250%25%22 text-anchor%3D%22middle%22 dy%3D%22.3em%22 fill%3D%22white%22 font-size%3D%2214%22%3E會員圖示%3C%2Ftext%3E%3C%2Fsvg%3E';">
+                </div>
+            </div>
+            <h1 class="text-3xl font-bold text-orange-900">13盧比民族風會員</h1>
+            <p class="text-orange-700/70 mt-2 italic">加入我們，體驗獨特的民族色彩</p>
+        </div>
+
+        <!-- 會員表單 -->
+        <form id="membershipForm" class="p-8 space-y-5">
+            <!-- 姓名與稱謂 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">姓名</label>
+                    <input type="text" name="user_name" required 
+                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none transition-all" 
+                        placeholder="請填寫姓名">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">稱謂</label>
+                    <select name="user_title" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none">
+                        <option value="先生">先生</option>
+                        <option value="小姐">小姐</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 行動電話 -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">行動電話</label>
+                <input type="tel" name="user_phone" required pattern="[0-9]{10}"
+                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none" 
+                    placeholder="例如：0912345678">
+            </div>
+
+            <!-- 電子郵件 -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">電子郵件 (Email)</label>
+                <input type="email" name="user_email" required 
+                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none" 
+                    placeholder="example@gmail.com">
+            </div>
+
+            <!-- 生日 (月/日) -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">生日 (月/日)</label>
+                <div class="grid grid-cols-2 gap-4">
+                    <select name="birth_month" id="birthMonth" required class="px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none">
+                        <option value="" disabled selected>月份</option>
+                    </select>
+                    <select name="birth_day" id="birthDay" required class="px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none">
+                        <option value="" disabled selected>日期</option>
+                    </select>
+                </div>
+                <p class="text-xs text-gray-400 mt-1">*僅用於提供生日專屬優惠</p>
+            </div>
+
+            <hr class="my-6 border-gray-100">
+
+            <!-- 會員權益 -->
+            <div class="bg-orange-50 p-5 rounded-xl border border-orange-100">
+                <h3 class="font-bold text-orange-800 mb-3 flex items-center">
+                    <span class="mr-2">📜</span> 【會員權益與規定】
+                </h3>
+                <ul class="text-sm text-gray-600 space-y-2 leading-relaxed">
+                    <li>• 填寫資料即可成為會員。</li>
+                    <li>• 單次消費滿 <span class="font-bold accent-color text-base">2000 元</span> 即可成為 VIP 及享貴賓優惠。</li>
+                    <li>• 會員消費滿 100 元即可累積 1 點，累積 30 點即可進階成為 VIP 及享貴賓優惠。</li>
+                    <li>• 持 VIP 卡消費享有 <span class="font-bold text-gray-800">平日 9 折</span> (特價品除外)。</li>
+                    <li>• 貴賓卡生日當月持卡消費享有 <span class="font-bold accent-color">85 折</span>。</li>
+                </ul>
+            </div>
+
+            <div class="flex items-start mt-4">
+                <input id="terms" type="checkbox" required class="mt-1 w-4 h-4 text-orange-600 border-gray-300 rounded focus:ring-orange-500">
+                <label for="terms" class="ml-2 text-xs text-gray-500">
+                    我已閱讀並同意上述會員權益與規定。
+                </label>
+            </div>
+
+            <button type="submit" id="submitBtn"
+                class="w-full bg-accent hover:bg-orange-800 text-white font-bold py-4 rounded-xl shadow-lg transition-all active:scale-[0.98] flex items-center justify-center">
+                立即加入會員
+            </button>
+        </form>
+
+        <!-- 成功訊息 -->
+        <div id="successView" class="hidden p-12 text-center">
+            <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">申請已送出！</h2>
+            <p class="text-gray-500 mb-8">感謝您的加入，我們已收到您的資料。<br>系統將發送通知至管理郵箱。</p>
+            <button onclick="location.reload()" class="bg-gray-100 text-gray-600 px-6 py-2 rounded-full font-medium hover:bg-gray-200">返回首頁</button>
+        </div>
+    </div>
+
+    <script>
+        // 初始化 EmailJS
+        (function() {
+            // 此處需填入您的 EmailJS Public Key
+            emailjs.init("bNKauQatfjk3zowwB"); 
+        })();
+
+        // 動態生成月份與日期
+        const monthSelect = document.getElementById('birthMonth');
+        const daySelect = document.getElementById('birthDay');
+        
+        for (let m = 1; m <= 12; m++) {
+            const opt = document.createElement('option');
+            opt.value = m;
+            opt.textContent = m + '月';
+            monthSelect.appendChild(opt);
+        }
+
+        for (let d = 1; d <= 31; d++) {
+            const opt = document.createElement('option');
+            opt.value = d;
+            opt.textContent = d + '日';
+            daySelect.appendChild(opt);
+        }
+
+        // 表單提交處理
+        const form = document.getElementById('membershipForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const successView = document.getElementById('successView');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> 傳送中...';
+
+            const formData = new FormData(form);
+            const templateParams = {
+                to_email: 'u831024@gmail.com',
+                from_name: formData.get('user_name') + ' ' + formData.get('user_title'),
+                phone: formData.get('user_phone'),
+                email: formData.get('user_email'),
+                birthday: formData.get('birth_month') + '月' + formData.get('birth_day') + '日',
+                message: "13盧比民族風會員 - 新申請通知"
+            };
+
+            // 如果已設定 EmailJS，請取消下方註釋
+            /*
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+            .then(function() {
+                form.classList.add('hidden');
+                successView.classList.remove('hidden');
+            }, function(error) {
+                alert('發送失敗，請稍後再試：' + JSON.stringify(error));
+                submitBtn.disabled = false;
+                submitBtn.textContent = '立即加入會員';
+            });
+            */
+
+            // 目前為演示效果
+            setTimeout(() => {
+                form.classList.add('hidden');
+                successView.classList.remove('hidden');
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
