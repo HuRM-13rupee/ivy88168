@@ -47,9 +47,19 @@
 
         <!-- 表單內容 -->
         <form id="membershipForm" class="p-8 space-y-5">
-            <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-1">姓名 / 微信名</label>
-                <input type="text" id="wechatName" name="wechatName" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none" placeholder="請填寫姓名或暱稱">
+            <!-- 姓名與稱謂 -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="md:col-span-3">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">姓名 / 微信名</label>
+                    <input type="text" id="wechatName" name="wechatName" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none" placeholder="請填寫姓名或暱稱">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">稱謂</label>
+                    <select id="userTitle" name="userTitle" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none">
+                        <option value="先生">先生</option>
+                        <option value="小姐">小姐</option>
+                    </select>
+                </div>
             </div>
 
             <div>
@@ -105,9 +115,11 @@
             btn.disabled = true;
             btn.innerText = '處理中，請稍候...';
 
-            // 準備發送的資料，確保與您的 Template {{ }} 標籤對齊
+            // 準備發送的資料，將姓名與稱謂合併發送
+            const fullName = document.getElementById('wechatName').value + ' ' + document.getElementById('userTitle').value;
+
             const templateParams = {
-                from_name: document.getElementById('wechatName').value,
+                from_name: fullName,
                 phone: document.getElementById('phoneNumber').value,
                 birthday: document.getElementById('birthday').value,
                 email: 'u831024@gmail.com'
